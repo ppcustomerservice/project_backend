@@ -107,7 +107,8 @@
 
 const express = require('express');
 const multer = require('multer');
-const { uploadToS3, deleteFromS3 } = require('../utils/s3Upload');
+const { uploadToS3, deleteFromS3 } = require('../utils/s3upload');
+
 const Project = require('../models/projectModel');
 
 const router = express.Router();

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const slugify = require('slugify');
 const projectSchema = new mongoose.Schema({
   // Basic Information
   title: { type: String, required: true },
@@ -75,7 +75,15 @@ const projectSchema = new mongoose.Schema({
   status: { type: String, enum: ['available', 'sold', 'reserved'], default: 'available' },
   lastPriceUpdate: Date,
   
-}, { 
+   slug: { 
+    type: String, 
+    unique: true,
+    default: function() {
+      return slugify(this.title, { lower: true, strict: true });
+    }
+  },
+},
+ { 
   timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true } 

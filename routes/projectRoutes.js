@@ -316,7 +316,25 @@ router.delete('/projects/:id', async (req, res) => {
     });
   }
 });
-
+// In your projectRoutes.js
+router.post('/', async (req, res) => {
+  try {
+    const project = new Project(req.body);
+    
+    // Auto-generate slug if empty
+    if (!project.slug) {
+      project.slug = slugify(project.title, { 
+        lower: true,
+        strict: true
+      });
+    }
+    
+    await project.save();
+    res.status(201).json(project);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 // PUT - Remove media from project
 // Make sure you have this route properly implemented
 router.put('/projects/:id/media', async (req, res) => {
